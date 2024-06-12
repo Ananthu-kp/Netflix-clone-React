@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import {API_KEY, imageUrl} from '../constants/config'
+import axios from '../axios'
 
 function Banner() {
+
+    const [movie, setMovie] = useState()
+
+    useEffect(() => {
+        axios.get(`trending/all/week?api_key=${API_KEY}&language=en-US`).then((responce) => {
+            console.log(responce.data.results[7]);
+            setMovie(responce.data.results[7])
+        })
+    }, [])
+
     return (
-        <div className='banner'>
+        <div  style={{backgroundImage: `url(${movie ? imageUrl+movie.backdrop_path : ""})`}}
+        className='banner'>
             <div className='content'>
-                <h1 className='title'>Movie Name</h1>
+                <h1 className='title'>{movie ? movie.title : ""}</h1>
                 <div className='bannerBtns'>
                     <button className='button'>Play</button>
                     <button className='button'>My List</button>
                 </div>
-                <h1 className='discription'>ReactJS Profilers is a tool for profiling the react components, It measures how many times the react Application is rendered and how much time the components take to be rendered.</h1>
+                <h1 className='discription'> {movie ? movie.overview : ""} </h1>
             </div>
             <div className="fade_bottom"></div>
         </div>
