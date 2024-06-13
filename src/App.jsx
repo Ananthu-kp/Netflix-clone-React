@@ -3,7 +3,7 @@ import Banner from './components/Banner'
 import NavBar from './components/NavBar'
 import RowPost from './components/RowPost'
 
-import {orginals, action, romance, horror, comedy, anime} from './urls'
+import {orginals, action, romance, horror, comedy, anime, malayalam, hindi} from './urls'
 
 function App() {
   return (
@@ -17,6 +17,8 @@ function App() {
       <RowPost url={horror} title='Horror' isSmall />
       <RowPost url={comedy} title='Comedy' isSmall />
       <RowPost url={anime} title='Anime' isSmall />
+      <RowPost url={malayalam} title='Mollywood' isSmall />
+      <RowPost url={hindi} title='Bollywood' isSmall />
 
     </div>
   )

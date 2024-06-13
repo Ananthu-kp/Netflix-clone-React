@@ -9,7 +9,7 @@ function Banner() {
     useEffect(() => {
         axios.get(`trending/all/week?api_key=${API_KEY}&language=en-US`).then((responce) => {
             console.log(responce.data.results[7]);
-            setMovie(responce.data.results[7])
+            setMovie(responce.data.results[8])
         })
     }, [])
 
