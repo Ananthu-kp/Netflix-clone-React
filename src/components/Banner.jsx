@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import {API_KEY, imageUrl} from '../constants/config'
+import { API_KEY, imageUrl } from '../constants/config'
 import axios from '../axios'
 
 function Banner() {
 
-    const [movie, setMovie] = useState()
+    const [movie, setMovie] = useState(null)
 
     useEffect(() => {
-        axios.get(`trending/all/week?api_key=${API_KEY}&language=en-US`).then((responce) => {
-            console.log(responce.data.results[7]);
-            setMovie(responce.data.results[8])
-        })
+        axios.get(`trending/all/week?api_key=${API_KEY}&language=en-US`)
+            .then((responce) => {
+                console.log(responce.data.results[5]);
+                setMovie(responce.data.results[5])
+            })
+            .catch((err) => {
+                console.log('Failed to fetch data', err);
+            })
     }, [])
 
     return (
-        <div  style={{backgroundImage: `url(${movie ? imageUrl+movie.backdrop_path : ""})`}}
-        className='banner'>
+        <div style={{ backgroundImage: `url(${movie ? imageUrl + movie.backdrop_path : ""})` }}
+            className='banner'>
             <div className='content'>
-                <h1 className='title'>{movie ? movie.title : ""}</h1>
+                <h1 className='title'>{movie ? (movie.title || movie.name) : ""}</h1>
                 <div className='bannerBtns'>
                     <button className='button'>Play</button>
                     <button className='button'>My List</button>

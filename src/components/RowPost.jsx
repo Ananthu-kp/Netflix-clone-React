@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../axios'
-import { imageUrl ,API_KEY} from '../constants/config'
+import { imageUrl, API_KEY } from '../constants/config'
 import Youtube from 'react-youtube';
 
 function RowPost(props) {
@@ -9,10 +9,14 @@ function RowPost(props) {
   const [urlId, setUrlId] = useState('')
 
   useEffect(() => {
-    axios.get(props.url).then((responce) => {
-      console.log(responce.data);
-      setMovies(responce.data.results)
-    })
+    axios.get(props.url)
+      .then((responce) => {
+        console.log(responce.data);
+        setMovies(responce.data.results)
+      })
+      .catch((err) => {
+        console.error('Failed to fetch data', err);
+      })
   }, [props.url])
 
   const opts = {
@@ -32,6 +36,9 @@ function RowPost(props) {
         console.log('Trailer not available');
       }
     })
+      .catch((err) => {
+        console.error('Failed to fetch movie', err);
+      })
   }
 
   return (
@@ -40,13 +47,14 @@ function RowPost(props) {
       <div className="posters">
 
         {movies.map((obj) =>
-          <img onClick={() => handleMovie(obj.id)} 
-          className={props.isSmall ? 'smallPoster' : 'poster'} 
-          src={`${imageUrl + obj.backdrop_path}`} alt="poster" />
+          <img onClick={() => handleMovie(obj.id)}
+            className={props.isSmall ? 'smallPoster' : 'poster'}
+            src={`${imageUrl + obj.backdrop_path}`}
+            alt="poster" />
         )}
 
       </div>
-        { urlId && <Youtube videoId={urlId.key} opts={opts}/>}
+      {urlId && <Youtube videoId={urlId.key} opts={opts} />}
     </div>
   )
 }
